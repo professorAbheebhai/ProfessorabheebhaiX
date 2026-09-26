@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbheeBhai — Every tool. One hub.</title>
+    <meta name="description" content="All tools in one place: Free AI tools, image generator, audio to text, text to voice, QR scanner, background remover, downloaders, and more.">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Monetag Scripts -->
+    <script src="https://quge5.com/88/tag.min.js" data-zone="287380" async data-cfasync="false"></script>
+    <script src="https://quge5.com/88/tag.min.js" data-zone="251561" async data-cfasync="false"></script>
+    <script src="https://5gvci.com/act/files/tag.min.js?z=11173216" data-cfasync="false" async></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fcfcfc;
+            color: #0f172a;
+            scroll-behavior: smooth;
+        }
+
+        /* Premium Card Hover Effects */
+        .tool-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Subtle radial mouse-follow effect (implemented via JS) */
+        .radial-highlight {
+            position: absolute;
+            pointer-events: none;
+            background: radial-gradient(circle 300px at var(--x) var(--y), rgba(0, 0, 0, 0.03), transparent 80%);
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tool-card:hover .radial-highlight {
+            opacity: 1;
+        }
+
+        /* Category Filter Chips */
+        .filter-chip {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .filter-chip.active {
+            background-color: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        /* Card Image Area Fallback (Linear style) */
+        .card-art {
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        /* Entrance Animation */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-enter {
+            animation: slideUpFade 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        /* Hide scrollbar for category filters */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Monetag Direct Link (Hidden/Pop) -->
+    <a href="https://omg10.com/4/11595944" target="_blank" class="hidden" id="monetag-direct"></a>
+
+    <!-- Header / Hero -->
+    <header class="pt-20 pb-12 px-6 max-w-6xl mx-auto w-full text-center">
+        <span class="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase mb-4 block">ABHEEBHAI</span>
+        <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-slate-900 mb-4">Every tool. One hub.</h1>
+        <p class="text-slate-500 text-lg max-w-2xl mx-auto mb-8">A curated collection of premium web utilities, AI generators, and design tools. Fast, reliable, and free to use.</p>
+        
+        <div class="flex items-center justify-center gap-6 text-sm font-medium text-slate-600 mb-10">
+            <div class="flex items-center gap-2"><i data-lucide="blocks" class="w-4 h-4"></i> <span id="tool-count">0</span> Tools</div>
+            <div class="flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4"></i> 100% Free</div>
+            <div class="flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4"></i> 4 Categories</div>
+        </div>
+
+        <!-- Adsterra Banner 728x90 (Desktop focused) -->
+        <div class="flex justify-center mb-8 overflow-hidden w-full max-w-3xl mx-auto bg-slate-50 rounded-xl">
+            <script>
+                atOptions = {
+                    'key' : '7136671e3f045ee67e4aeeb22ce261ea',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://archbishopaluminiumcountenance.com/7136671e3f045ee67e4aeeb22ce261ea/invoke.js"></script>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="max-w-3xl mx-auto w-full">
+            <div class="relative mb-6">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                <input type="text" id="search-input" placeholder="Search tools..." class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent shadow-sm transition-all text-sm placeholder:text-slate-400">
+            </div>
+
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2" id="filter-container">
+                <!-- Filters injected via JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Grid -->
+    <main class="flex-grow px-6 pb-24 max-w-6xl mx-auto w-full">
+        <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards injected via JS -->
+        </div>
+
+        <!-- No Results State -->
+        <div id="no-results" class="hidden text-center py-20">
+            <i data-lucide="search-x" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
+            <h3 class="text-lg font-medium text-slate-900">No tools found</h3>
+            <p class="text-slate-500">Try adjusting your search or category filter.</p>
+        </div>
+    </main>
+
+    <!-- Adsterra Ad Script (Popup/Native) -->
+    <script src="https://archbishopaluminiumcountenance.com/6d/2b/ee/6d2bee79faa0060148046655d60fef1e.js"></script>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-12 px-6">
+        <div class="max-w-6xl mx-auto w-full flex flex-col items-center">
+            
+            <!-- Adsterra Banner 320x50 (Mobile friendly) -->
+            <div class="flex justify-center mb-10 overflow-hidden bg-slate-50 rounded-lg">
+                <script>
+                    atOptions = {
+                        'key' : '69e2a31970e9778ad15e2e3b70c7b876',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script src="https://archbishopaluminiumcountenance.com/69e2a31970e9778ad15e2e3b70c7b876/invoke.js"></script>
+            </div>
+
+            <span class="text-xs font-semibold tracking-widest text-slate-400 uppercase mb-6 block">Follow AbheeBhai</span>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mb-12" id="cta-container">
+                <!-- CTA links injected via JS -->
+            </div>
+
+            <p class="text-sm text-slate-400">&copy; 2026 AbheeBhai. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // --- DATA ---
+        const tools = [
+            { name: "Image Generator", tagline: "Free AI images, no limits", category: "AI Tools", icon: "image", url: "https://image-generator-green-pi.vercel.app/", status: "live", color: "text-purple-500" },
+            { name: "Audio to Text", tagline: "Convert speech to text, fast", category: "AI Tools", icon: "mic", url: "https://audio-to-text.zone.id/", status: "live", color: "text-purple-500" },
+            { name: "Text to Voice", tagline: "Free ElevenLabs alternative", category: "AI Tools", icon: "volume-2", url: "https://text-to-voice-generator.zone.id/", status: "live", color: "text-purple-500" },
+            { name: "QR Code Scanner", tagline: "Scan and generate QR codes free", category: "Utility", icon: "qr-code", url: "#", status: "coming soon", color: "text-teal-500" },
+            { name: "Background Remover", tagline: "Remove image backgrounds instantly", category: "AI Tools", icon: "scissors", url: "#", status: "coming soon", color: "text-purple-500" },
+            { name: "YT Thumbnail Downloader", tagline: "Download any YouTube thumbnail in HD", category: "Utility", icon: "youtube", url: "https://yt-thumbnail-downloader-by-proxarmy.vercel.app/", status: "live", color: "text-teal-500" },
+            { name: "Sub4Unlock", tagline: "Shorten links, unlock instantly", category: "Utility", icon: "link", url: "https://sub4unlock.zone.id/", status: "live", color: "text-teal-500" },
+            { name: "Live TV Channels", tagline: "Stream live TV, free & instant", category: "Utility", icon: "tv", url: "https://live-tv-channels.zone.id/", status: "live", color: "text-teal-500" },
+            { name: "Life Calculator", tagline: "Know your exact age, instantly", category: "Utility", icon: "calendar", url: "https://life-calculator-iota.vercel.app/", status: "live", color: "text-teal-500" },
+            { name: "HTML Code Encryptor", tagline: "Protect your source code", category: "Utility", icon: "lock", url: "https://html-code-encrypt-generator.zone.id/", status: "live", color: "text-teal-500" },
+            { name: "Wedding Cards", tagline: "Beautiful invitations in minutes", category: "Design", icon: "heart", url: "https://wedding-cards-nine.vercel.app/", status: "live", color: "text-pink-500" },
+            { name: "Portfolio (SEO)", tagline: "AbheeBhai — SEO optimized", category: "Portfolio", icon: "user", url: "https://professor-abheebhai.zone.id/", status: "live", color: "text-indigo-500" },
+            { name: "Portfolio (Visual)", tagline: "AbheeBhai — visual showcase", category: "Portfolio", icon: "palette", url: "https://abheebhai-visual.vercel.app/", status: "live", color: "text-indigo-500" },
+            { name: "Portfolio (Main)", tagline: "AbheeBhai — main portfolio", category: "Portfolio", icon: "briefcase", url: "https://professor-abheebhai-portfolio.vercel.app/", status: "live", color: "text-indigo-500" },
+            { name: "Sim Database", tagline: "Owner details & numbers", category: "Utility", icon: "database", url: "https://sim-owner-details-azure.vercel.app/", status: "live", color: "text-teal-500" },
+            { name: "AbheeBhai Labs", tagline: "Experimental projects hub", category: "Portfolio", icon: "flask-conical", url: "https://abheebhai-labs.zone.id/", status: "live", color: "text-indigo-500" },
+            { name: "CC Generator Pro", tagline: "Generate test card numbers", category: "Utility", icon: "credit-card", url: "https://cc-generator-pro.vercel.app/", status: "live", color: "text-teal-500" }
+        ];
+
+        const ctaLinks = [
+            { platform: "Telegram (Main)", icon: "send", url: "https://t.me/flexzone_official" },
+            { platform: "Telegram (Prof)", icon: "send", url: "https://t.me/professorabheebhai" },
+            { platform: "YouTube", icon: "youtube", url: "https://youtube.com/@abheebhai" },
+            { platform: "GitHub", icon: "github", url: "https://github.com/professorAbheebhai/" },
+            { platform: "WhatsApp Channel 1", icon: "message-circle", url: "https://whatsapp.com/channel/0029Vb7FZ4lBPzjb8g1Tux3l" },
+            { platform: "WhatsApp Channel 2", icon: "message-circle", url: "https://whatsapp.com/channel/0029VbDAqSp3wtbHsfaauY0n" },
+            { platform: "Earning Opportunity", icon: "dollar-sign", url: "https://whatsapp.com/channel/0029VbB1V2uHFxP7QM70jK1F" },
+            { platform: "WhatsApp Group", icon: "users", url: "https://whatsapp.com/channel/0029Vb93P6p2P59m2mM9dl2x" }
+        ];
+
+        const categories = ["All", "AI Tools", "Utility", "Design", "Portfolio"];
+        let currentCategory = "All";
+        let searchQuery = "";
+
+        // --- DOM ELEMENTS ---
+        const grid = document.getElementById("tools-grid");
+        const filterContainer = document.getElementById("filter-container");
+        const searchInput = document.getElementById("search-input");
+        const noResults = document.getElementById("no-results");
+        const ctaContainer = document.getElementById("cta-container");
+        const countDisplay = document.getElementById("tool-count");
+
+        // --- INITIALIZATION ---
+        function init() {
+            countDisplay.innerText = tools.length;
+            renderFilters();
+            renderCTA();
+            renderGrid();
+            lucide.createIcons();
+            
+            // Search Listener
+            searchInput.addEventListener("input", (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderGrid();
+            });
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderFilters() {
+            filterContainer.innerHTML = categories.map(cat => `
+                <button 
+                    onclick="setCategory('${cat}')"
+                    class="filter-chip px-4 py-1.5 rounded-full border border-slate-200 text-sm font-medium whitespace-nowrap ${currentCategory === cat ? 'active' : 'text-slate-600 bg-white hover:bg-slate-50'}"
+                >
+                    ${cat}
+                </button>
+            `).join("");
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            renderFilters();
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const filtered = tools.filter(tool => {
+                const matchesCat = currentCategory === "All" || tool.category === currentCategory;
+                const matchesSearch = tool.name.toLowerCase().includes(searchQuery) || tool.tagline.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                noResults.classList.remove("hidden");
+            } else {
+                noResults.classList.add("hidden");
+                grid.innerHTML = filtered.map((tool, index) => {
+                    const isComingSoon = tool.status === "coming soon";
+                    const delay = index * 50; // Staggered animation
+                    
+                    return `
+                        <div 
+                            class="tool-card rounded-[14px] flex flex-col cursor-${isComingSoon ? 'not-allowed opacity-70' : 'pointer'} animate-enter"
+                            style="animation-delay: ${delay}ms"
+                            ${!isComingSoon ? `onclick="window.open('${tool.url}', '_blank')"` : ''}
+                            onmousemove="handleMouseMove(event, this)"
+                        >
+                            <div class="radial-highlight"></div>
+                            
+                            <!-- Custom Art/Icon Area (Fallback for Unsplash) -->
+                            <div class="card-art relative">
+                                <div class="absolute inset-0 bg-white opacity-40"></div>
+                                <i data-lucide="${tool.icon}" class="w-12 h-12 ${tool.color} z-10 opacity-80"></i>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="p-5 flex-grow bg-white z-10">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-sm font-semibold text-slate-900">${tool.name}</h3>
+                                    ${isComingSoon ? '<span class="text-[10px] font-medium tracking-wide text-slate-400 uppercase bg-slate-100 px-2 py-0.5 rounded-sm">Soon</span>' : ''}
+                                </div>
+                                <p class="text-xs text-slate-500">${tool.tagline}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+                
+                // Re-initialize icons for newly added HTML
+                lucide.createIcons();
+            }
+        }
+
+        function renderCTA() {
+            ctaContainer.innerHTML = ctaLinks.map(cta => `
+                <a href="${cta.url}" target="_blank" class="flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-1 transition-all text-sm font-medium text-slate-700 shadow-sm">
+                    <i data-lucide="${cta.icon}" class="w-4 h-4 text-slate-500"></i>
+                    <span class="truncate">${cta.platform}</span>
+                </a>
+            `).join("");
+        }
+
+        // --- MICRO-INTERACTIONS ---
+        // Radial hover effect following the cursor
+        function handleMouseMove(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+        }
+
+        // Boot
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
